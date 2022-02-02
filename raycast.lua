@@ -46,51 +46,44 @@ local Raycast = {
       -- Regarde en haut
       if _rayAngleRad > 0 and  _rayAngleRad < math.pi then
 
-        local _deltaY =             Player.y1 % 50
-        local _deltaX = _deltaY / math.tan(_rayAngleRad)
+        ray.y2 = math.floor(Player.y1/50) * 50 -- calcul de la composante y de la première intersection avec une ligne horizontale en arrondissant au plus proche 50ème vers 0
+        ray.x2 = (ray.y1 - ray.y2) / math.tan(_rayAngleRad) + ray.x1 -- calcul de la composante x avec la trigo
 
-        --Fonctionnel pour trouver la première ligne horizontale
-        nextX = Player.x1 + _deltaX
-        nextY = Player.y1 - _deltaY
+        offsetX = ray.x2 - ray.x1
+        offsetY = -50
 
-        --Test pour trouver la seconde ligne horizontale
-        --nextX = Player.x1 + _deltaX + _deltaX
-        --nextY = Player.y1 - _deltaY - 50 -- On retire la taille d'une case
+        -- Test calcul de la prochaine intersection
+        ray.y2 = ray.y2 + offsetY*2
+        ray.x2 = ray.x2 + offsetX*2
 
       end
 
       -- Regarde en bas
       if _rayAngleRad > math.pi and _rayAngleRad < math.pi*2 then
 
-        local _deltaY
+        ray.y2 = math.ceil(Player.y1/50) * 50 -- calcul de la composante y de la première intersection avec une ligne horizontale en arrondissant au plus proche 50ème vers 0
+        ray.x2 = (ray.y1 - ray.y2) / math.tan(_rayAngleRad) + ray.x1 -- calcul de la composante x avec la trigo
 
-        if Player.y1 % 50 > 0 then
-          _deltaY = 50 - Player.y1 % 50
-        else
-          _deltaY = Player.y1
-        end
+        offsetX = ray.x2 - ray.x1
+        offsetY = 50
 
-        local _deltaX = _deltaY / math.tan(_rayAngleRad)
-
-        --Fonctionnel pour trouver la première ligne horizontale
-        nextX = Player.x1 - _deltaX
-        nextY = Player.y1 + _deltaY
-
-        --Test pour trouver la seconde ligne horizontale
-        --nextX = Player.x1 - _deltaX - _deltaX
-        --nextY = Player.y1 + _deltaY + 50 -- On ajoute la taille d'une case
+        -- Test calcul de la prochaine intersection
+        ray.y2 = ray.y2 + offsetY*2
+        ray.x2 = ray.x2 + offsetX*2
 
       end
 
       -- Regarde pile à gauche ou pile à droite
       if _rayAngleRad == 0 or _rayAngleRad == math.pi or _rayAngleRad == math.pi*2 then
         _nbMaxCases = 16
+        ray.x2 = ray.x1
+        ray.y2 = ray.y1
       end
 
       -- On ajoute les points pour le rendu
       local _dot = {}
-      _dot.x = nextX
-      _dot.y = nextY
+      _dot.x = ray.x2
+      _dot.y = ray.y2
 
       table.insert(self.dots,_dot)
 
@@ -103,10 +96,6 @@ local Raycast = {
 
         _nbMaxCases = _nbMaxCases+1
       end
-
-      ray.x2 = Player.x1 + math.cos(_rayAngleRad) * 1000
-      ray.y2 = Player.y1 - math.sin(_rayAngleRad) * 1000
-
 
       table.insert(self.rays,ray)
     end
