@@ -52,10 +52,6 @@ local Raycast = {
         offsetY = Level.squareSize * (-1)
         offsetX = offsetY * (-1) / math.tan(_rayAngleRad+math.pi)
 
-        -- TEST
-        ray.y2 = ray.y2 + offsetY
-        ray.x2 = ray.x2 + offsetX
-
       end
 
       -- Regarde en bas
@@ -67,11 +63,6 @@ local Raycast = {
         offsetY = Level.squareSize
         offsetX = offsetY * (-1) / math.tan(_rayAngleRad+math.pi)
 
-
-        -- TEST
-        ray.y2 = ray.y2 + offsetY
-        ray.x2 = ray.x2 + offsetX
-
       end
 
       -- Regarde pile à gauche ou pile à droite
@@ -81,31 +72,36 @@ local Raycast = {
         ray.y2 = ray.y1
       end
 
-      --[[while _nbCases < 16 do
+      while _nbCases < 16 do
+
+        -- On ajoute les points pour le rendu
+        local _dot = {}
+        _dot.x = ray.x2
+        _dot.y = ray.y2
+        table.insert(self.dots,_dot)
 
         -- Todo récupérer la case du tableau
         local _mapX = math.ceil(ray.x2 / Level.squareSize)
-        local _mapY = math.ceil(ray.y2 / Level.squareSize)
+        local _mapY = math.floor(ray.y2 / Level.squareSize)
 
         local _mapSquare = Level.walls[_mapY*Level.width+_mapX]
 
+        -- Test : on ajoute systématiquement une case
+        --ray.y2 = ray.y2 + offsetY*2
+        --ray.x2 = ray.x2 + offsetX*2
+        --_nbCases = _nbCases+1
+
         if _mapSquare == 0 then
           -- Calcul de la prochaine intersection, à faire seulement si le contenu de la case est 0
-          ray.y2 = ray.y2 + offsetY*2
-          ray.x2 = ray.x2 + offsetX*2
+          ray.y2 = ray.y2 + offsetY
+          ray.x2 = ray.x2 + offsetX
           _nbCases = _nbCases+1
         else
           _nbCases = 16
         end
 
-      end--]]
+      end
 
-      -- On ajoute les points pour le rendu
-      local _dot = {}
-      _dot.x = ray.x2
-      _dot.y = ray.y2
-
-      table.insert(self.dots,_dot)
 
       table.insert(self.rays,ray)
     end
