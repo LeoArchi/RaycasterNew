@@ -46,11 +46,11 @@ local Raycast = {
       -- Regarde en haut
       if _rayAngleRad > 0 and  _rayAngleRad < math.pi then
 
-        ray.y2 = math.floor(Player.y1/50) * 50 -- calcul de la composante y de la première intersection avec une ligne horizontale en arrondissant au plus proche 50ème vers 0
+        ray.y2 = math.floor(Player.y1/Level.squareSize) * Level.squareSize -- calcul de la composante y de la première intersection avec une ligne horizontale en arrondissant au plus proche 50ème vers 0
         ray.x2 = (ray.y1 - ray.y2) / math.tan(_rayAngleRad) + ray.x1 -- calcul de la composante x avec la trigo
 
         offsetX = ray.x2 - ray.x1
-        offsetY = -50
+        offsetY = Level.squareSize * (-1)
 
         -- Test calcul de la prochaine intersection
         ray.y2 = ray.y2 + offsetY*2
@@ -61,11 +61,11 @@ local Raycast = {
       -- Regarde en bas
       if _rayAngleRad > math.pi and _rayAngleRad < math.pi*2 then
 
-        ray.y2 = math.ceil(Player.y1/50) * 50 -- calcul de la composante y de la première intersection avec une ligne horizontale en arrondissant au plus proche 50ème vers 0
+        ray.y2 = math.ceil(Player.y1/Level.squareSize) * Level.squareSize -- calcul de la composante y de la première intersection avec une ligne horizontale en arrondissant au plus proche 50ème vers 0
         ray.x2 = (ray.y1 - ray.y2) / math.tan(_rayAngleRad) + ray.x1 -- calcul de la composante x avec la trigo
 
         offsetX = ray.x2 - ray.x1
-        offsetY = 50
+        offsetY = Level.squareSize
 
         -- Test calcul de la prochaine intersection
         ray.y2 = ray.y2 + offsetY*2
@@ -92,7 +92,7 @@ local Raycast = {
 
         -- Todo récupérer la case du tableau
 
-        local _case = Level.walls[1][1]
+        --local _case = Level.walls[1][1]
 
         _nbMaxCases = _nbMaxCases+1
       end
