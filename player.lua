@@ -28,7 +28,7 @@ local Player = {
 
   end,
 
-  draw = function(self)
+  draw2D = function(self)
     love.graphics.setColor(252/255, 186/255, 3/255, 1)
     love.graphics.rectangle("fill", self.x1-5, self.y1-5, 10, 10)
     love.graphics.line(self.x1, self.y1, self.x2, self.y2)

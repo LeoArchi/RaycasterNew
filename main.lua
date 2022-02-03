@@ -37,7 +37,9 @@ end
 function love.draw()
 
   Level:draw()
-  Raycast:draw()
-  Player:draw()
+  Raycast:draw2D()
+  Player:draw2D()
+
+  --Raycast:draw3D()
 
 end
