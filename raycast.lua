@@ -74,21 +74,30 @@ local Raycast = {
 
       while _nbCases < 16 do
 
+        -- Todo récupérer la case du tableau
+        local _mapX = math.floor(ray.x2 / Level.squareSize) +1
+
+        local _mapY = (ray.y2/Level.squareSize)
+        if offsetY > 0 then
+          _mapY = _mapY + 1
+        end
+
+
+        local _mapSquare = Level.walls[(_mapY-1)*Level.width+_mapX]
+
         -- On ajoute les points pour le rendu
         local _dot = {}
         _dot.x = ray.x2
         _dot.y = ray.y2
+        _dot.offsetY = offsetY
+        _dot.map = {}
+        _dot.map.x = _mapX
+        _dot.map.y = _mapY
         table.insert(self.dots,_dot)
 
-        -- Todo récupérer la case du tableau
-        local _mapX = math.ceil(ray.x2 / Level.squareSize)
-        local _mapY = math.floor(ray.y2 / Level.squareSize)
-
-        local _mapSquare = Level.walls[_mapY*Level.width+_mapX]
-
         -- Test : on ajoute systématiquement une case
-        --ray.y2 = ray.y2 + offsetY*2
-        --ray.x2 = ray.x2 + offsetX*2
+        --ray.y2 = ray.y2 + offsetY
+        --ray.x2 = ray.x2 + offsetX
         --_nbCases = _nbCases+1
 
         if _mapSquare == 0 then
@@ -117,6 +126,8 @@ local Raycast = {
     end
 
     for i,dot in ipairs(self.dots) do
+
+      --love.graphics.print("x:"..dot.map.x .. " y:" .. dot.map.y .. " offY:".. dot.offsetY, dot.x-20, dot.y-20)
       love.graphics.circle('fill', dot.x, dot.y, 3, 32)
       love.graphics.circle('line', dot.x, dot.y, 6, 32)
     end
