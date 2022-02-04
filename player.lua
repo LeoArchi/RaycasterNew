@@ -76,6 +76,14 @@ local Player = {
       newY = self.y1 - self.vectors['d'].y*dt
     end
 
+    newTemoinX = newX + math.cos(self.a) * self.r
+    newTemoinY = newY - math.sin(self.a) * self.r
+
+    mapX = math.floor(newTemoinX/Level.squareSize) +1
+    mapY = math.floor(newTemoinY/Level.squareSize) +1
+    mapSquare = Level.walls[(mapY-1)*Level.width+mapX]
+
+
     self.x1 = newX
     self.y1 = newY
 
@@ -86,6 +94,12 @@ local Player = {
   end,
 
   draw2D = function(self)
+
+    love.graphics.setColor(0, 1, 0, 1)
+    love.graphics.print("mapX: " .. mapX .. " mapY: " .. mapY, newTemoinX + 10, newTemoinY - 10)
+
+    love.graphics.rectangle('fill', (mapX-1)*Level.squareSize, (mapY-1)*Level.squareSize, Level.squareSize, Level.squareSize)
+
     love.graphics.setColor(252/255, 186/255, 3/255, 1)
     love.graphics.rectangle("fill", self.x1-5, self.y1-5, 10, 10)
     love.graphics.line(self.x1, self.y1, self.x2, self.y2)
