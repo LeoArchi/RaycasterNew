@@ -24,6 +24,9 @@ local Minimap = {
 
   draw = function(self)
 
+    love.graphics.setColor(0.15, 0.15, 0.15, 1)
+    love.graphics.rectangle('fill', self.x, self.y, self.width, self.height)
+
     love.graphics.setLineWidth(3)
 
     -- draw a rectangle as a stencil. Each pixel touched by the rectangle will have its stencil value set to 1. The rest will be 0.
@@ -34,7 +37,6 @@ local Minimap = {
 
     love.graphics.push()
 
-    -- Commenter ces lignes pour passer la carte en plein écran
     love.graphics.translate(self.center.x - Player.x1*self.scale, self.center.y - Player.y1*self.scale)
     love.graphics.scale(self.scale, self.scale)
 
@@ -44,11 +46,12 @@ local Minimap = {
 
     love.graphics.pop()
 
-    -- Commenter ces lignes pour passer la carte en plein écran
+    love.graphics.setStencilTest()
+
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.rectangle('line', self.x, self.y, self.width, self.height)
 
-    love.graphics.setStencilTest()
+
 
   end
 

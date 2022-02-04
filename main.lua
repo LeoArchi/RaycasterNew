@@ -26,7 +26,7 @@ function love.load()
   Minimap:init(20, 20, 175, 100)
 
   mode = "3D"
-  displayCasting = true
+  displayCasting = false
 
 end
 
