@@ -212,7 +212,7 @@ local Raycast = {
     for i,ray in ipairs(self.rays) do
 
       local distCorr = math.cos(ray.angle - Player.a) * ray.dist
-      local lineHeight = Level.squareSize * 320 / distCorr
+      local lineHeight = Level.squareSize * 600 / distCorr
 
       love.graphics.setColor(ray.color)
 
