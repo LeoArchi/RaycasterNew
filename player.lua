@@ -6,6 +6,8 @@ local Player = {
   y1,
   x2,
   y2,
+  speed,
+  vectors,
 
   init = function(self, x1, y1, r, a)
     self.x1 = x1
@@ -14,15 +16,70 @@ local Player = {
     self.a = a
     self.x2 = self.x1 + self.r
     self.y2 = self.y1
+    self.speed = 100
+    self.vectors = {}
   end,
 
   update = function(self, dt)
+
+    -- Recorrection de l'angle entre 0 et 2 PI radians
+
     if self.a > 2 * math.pi then
       self.a = self.a - 2 * math.pi
     elseif self.a < 0 then
       self.a = self.a + 2 * math.pi
     end
 
+    -- Calcul des vecteurs de déplacement
+    -- Calcul "vecteur" Avant
+    vector_front = {}
+    vector_front.x = math.cos(self.a) * self.speed
+    vector_front.y = math.sin(self.a) * self.speed
+    self.vectors['z'] = vector_front
+
+    -- Calcul "vecteur" Arrière
+    vector_back = {}
+    vector_back.x = math.cos(self.a+math.pi) * self.speed
+    vector_back.y = math.sin(self.a+math.pi) * self.speed
+    self.vectors['s'] = vector_back
+
+    -- Calcul "vecteur" Gauche
+    vector_left = {}
+    vector_left.x = math.cos(self.a+math.pi/2) * self.speed
+    vector_left.y = math.sin(self.a+math.pi/2) * self.speed
+    self.vectors['q'] = vector_left
+
+    -- Calcul "vecteur" Droite
+    vector_right = {}
+    vector_right.x = math.cos(self.a+3*math.pi/2) * self.speed
+    vector_right.y = math.sin(self.a+3*math.pi/2) * self.speed
+    self.vectors['d'] = vector_right
+
+    local newX = self.x1
+    local newY = self.y1
+
+    -- Déplacement du joueur
+    if love.keyboard.isDown("z") then
+      newX = self.x1 + self.vectors['z'].x*dt
+      newY = self.y1 - self.vectors['z'].y*dt
+    end
+    if love.keyboard.isDown("s") then
+      newX = self.x1 + self.vectors['s'].x*dt
+      newY = self.y1 - self.vectors['s'].y*dt
+    end
+    if love.keyboard.isDown("q") then
+      newX = self.x1 + self.vectors['q'].x*dt
+      newY = self.y1 - self.vectors['q'].y*dt
+    end
+    if love.keyboard.isDown("d") then
+      newX = self.x1 + self.vectors['d'].x*dt
+      newY = self.y1 - self.vectors['d'].y*dt
+    end
+
+    self.x1 = newX
+    self.y1 = newY
+
+    -- Calcul de la position du témoin d'orientation
     self.x2 = self.x1 + math.cos(self.a) * self.r
     self.y2 = self.y1 - math.sin(self.a) * self.r
 

@@ -9,7 +9,7 @@ function love.load()
   love.mouse.setGrabbed(true)
 
   Player:init(love.graphics.getWidth()/2+25, love.graphics.getHeight()/2+25, 15, 0)
-  Raycast:init(60,100)
+  Raycast:init(60,800)
   Level:init()
 
 end
@@ -36,10 +36,10 @@ end
 
 function love.draw()
 
-  Level:draw()
-  Raycast:draw2D()
-  Player:draw2D()
+  --Level:draw()
+  --Raycast:draw2D()
+  --Player:draw2D()
 
-  --Raycast:draw3D()
+  Raycast:draw3D()
 
 end

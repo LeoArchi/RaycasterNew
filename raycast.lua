@@ -234,13 +234,19 @@ local Raycast = {
 
   draw3D = function(self)
 
+    love.graphics.setColor(200/255, 200/255, 242/255)
+    love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight()/2)
+
+    love.graphics.setColor(247/255, 180/255, 22/255)
+    love.graphics.rectangle("fill", 0, love.graphics.getHeight()/2, love.graphics.getWidth(), love.graphics.getHeight()/2)
+
     for i,ray in ipairs(self.rays) do
 
       local distCorr = math.cos(ray.angle - Player.a) * ray.dist
-      local lineHeight = Level.squareSize * 300 / distCorr
+      local lineHeight = Level.squareSize * 320 / distCorr
 
       if ray.isVertical then
-        love.graphics.setColor(0.8, 0.3, 0.3, 1)
+        love.graphics.setColor(0.8, 0.4, 0.4, 1)
       else
         love.graphics.setColor(0.8, 0.2, 0.2, 1)
       end
