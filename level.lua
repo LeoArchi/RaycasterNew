@@ -40,6 +40,8 @@ local Level = {
 
   draw = function(self)
 
+    love.graphics.setLineWidth(1)
+
     for y=1, self.height do
       for x=1, self.width do
 

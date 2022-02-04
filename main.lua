@@ -23,8 +23,10 @@ function love.load()
   Player:init(15, 0)
   Raycast:init(60,800)
 
-
   Minimap:init(20, 20, 175, 100)
+
+  mode = "3D"
+  displayCasting = true
 
 end
 
@@ -43,6 +45,18 @@ function love.keypressed(key, scancode, isrepeat)
    -- Touche "Quitter"
    if key == "escape" then
      love.event.quit(0)
+   elseif key == "m" then
+     if mode == "3D" then
+       mode = "2D"
+     elseif mode == "2D" then
+       mode = "3D"
+     end
+   elseif key == "c" then
+     if displayCasting then
+       displayCasting = false
+     else
+       displayCasting = true
+     end
    end
 
 end
@@ -50,11 +64,13 @@ end
 
 function love.draw()
 
-  --Level:draw()
-  --Raycast:draw2D()
-  --Player:draw2D()
-
-  Raycast:draw3D()
-  Minimap:draw()
+  if mode == "2D" then
+    Level:draw()
+    if displayCasting then Raycast:draw2D() end
+    Player:draw2D()
+  elseif mode == "3D" then
+    Raycast:draw3D()
+    Minimap:draw()
+  end
 
 end
