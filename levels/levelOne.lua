@@ -8,6 +8,7 @@ LevelOne.spawn.x = 17
 LevelOne.spawn.y = 14
 
 LevelOne.squareSize = 25
+LevelOne.maxSquares = 32
 
 LevelOne.walls = {
 1,

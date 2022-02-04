@@ -6,6 +6,7 @@ local Level = {
   height,
 
   squareSize,
+  maxSquares,
 
   top={},
   walls={},
@@ -43,7 +44,7 @@ local Level = {
     self.squareSize = LevelOne.squareSize
     self.spawn = LevelOne.spawn
     self.walls = LevelOne.walls
-
+    self.maxSquares = LevelOne.maxSquares
 
   end,
 

@@ -31,12 +31,12 @@ local function checkHorizontalLines(x1, y1, rayAngleRad)
 
   -- Regarde pile à gauche ou pile à droite
   if ray.angle == 0 or ray.angle == math.pi or ray.angle == math.pi*2 then
-    nbCases = 16
+    nbCases = Level.maxSquares
     ray.x2 = ray.x1
     ray.y2 = ray.y1
   end
 
-  while nbCases < 16 do
+  while nbCases < Level.maxSquares do
 
     -- Récupération de la case du tableau
     local mapX = math.floor(ray.x2 / Level.squareSize) +1
@@ -58,7 +58,7 @@ local function checkHorizontalLines(x1, y1, rayAngleRad)
       elseif mapSquare == 2 then
         ray.color = {0.2, 0.2, 0.8, 1}
       end
-      nbCases = 16
+      nbCases = Level.maxSquares
     end
 
   end
@@ -102,14 +102,13 @@ local function checkVerticalLines(x1, y1, rayAngleRad)
 
   -- Regarde pile en haut ou pile en bas
   if ray.angle == math.pi/2 or ray.angle == 3*math.pi/2 then
-
-    nbCases = 16
+    nbCases = Level.maxSquares
     ray.x2 = ray.x1
     ray.y2 = ray.y1
   end
 
 
-  while nbCases < 16 do
+  while nbCases < Level.maxSquares do
 
     -- Récupération de la case du tableau
     local mapY = math.floor(ray.y2 / Level.squareSize) +1 --(ray.y2/Level.squareSize)
@@ -133,7 +132,7 @@ local function checkVerticalLines(x1, y1, rayAngleRad)
       elseif mapSquare ==2 then
         ray.color = {0.4, 0.4, 0.8, 1}
       end
-      nbCases = 16
+      nbCases = Level.maxSquares
     end
 
   end
