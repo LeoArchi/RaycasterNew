@@ -22,7 +22,7 @@ local Level = {
       1,0,0,1,1,1,1,0,0,1,0,0,0,0,0,1,
       1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,
       1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,
-      1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,
+      1,0,0,0,0,0,2,0,0,0,0,0,1,0,0,1,
       1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,
       1,0,0,1,1,1,0,0,0,0,1,1,1,0,0,1,
       1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,
@@ -48,7 +48,7 @@ local Level = {
           love.graphics.rectangle('fill', _squareX, _squareY, self.squareSize, self.squareSize)
           love.graphics.setColor(0.3, 0.3, 0.3, 1)
           love.graphics.rectangle('line', _squareX, _squareY, self.squareSize, self.squareSize)
-        elseif _square == 1 then
+        else
           love.graphics.setColor(0.9, 0.9, 0.9, 1)
           love.graphics.rectangle('fill', _squareX, _squareY, self.squareSize, self.squareSize)
           love.graphics.setColor(0.3, 0.3, 0.3, 1)
