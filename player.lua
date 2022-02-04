@@ -6,21 +6,23 @@ local Player = {
   y1,
   x2,
   y2,
+  maxSpeed,
   speed,
-  vectors,
+  --vectors,
 
   init = function(self, r, a)
     self.x1 =  Level.spawn.x * Level.squareSize - Level.squareSize/2 -- Spawn en fonction du Level
     self.y1 =  Level.spawn.y * Level.squareSize - Level.squareSize/2 -- Spawn en fonction du Level
     self.r = r
     self.a = a
-    self.x2 = self.x1 + self.r
-    self.y2 = self.y1
-    self.speed = 100
-    self.vectors = {}
+    self.maxSpeed = 100
   end,
 
   update = function(self, dt)
+
+    local _playerDegreesAngle = MathUtils.radsTodegrees(self.a)
+
+    self.speed = Vector:new(0,_playerDegreesAngle)
 
     -- Recorrection de l'angle entre 0 et 2 PI radians
 
@@ -30,57 +32,34 @@ local Player = {
       self.a = self.a + 2 * math.pi
     end
 
-    -- Calcul des vecteurs de déplacement
-    -- Calcul "vecteur" Avant
-    vector_front = {}
-    vector_front.x = math.cos(self.a) * self.speed
-    vector_front.y = math.sin(self.a) * self.speed
-    self.vectors['z'] = vector_front
-
-    -- Calcul "vecteur" Arrière
-    vector_back = {}
-    vector_back.x = math.cos(self.a+math.pi) * self.speed
-    vector_back.y = math.sin(self.a+math.pi) * self.speed
-    self.vectors['s'] = vector_back
-
-    -- Calcul "vecteur" Gauche
-    vector_left = {}
-    vector_left.x = math.cos(self.a+math.pi/2) * self.speed
-    vector_left.y = math.sin(self.a+math.pi/2) * self.speed
-    self.vectors['q'] = vector_left
-
-    -- Calcul "vecteur" Droite
-    vector_right = {}
-    vector_right.x = math.cos(self.a+3*math.pi/2) * self.speed
-    vector_right.y = math.sin(self.a+3*math.pi/2) * self.speed
-    self.vectors['d'] = vector_right
-
-    local newX = self.x1
-    local newY = self.y1
-
     -- Déplacement du joueur
     if love.keyboard.isDown("z") then
-      newX = self.x1 + self.vectors['z'].x*dt
-      newY = self.y1 - self.vectors['z'].y*dt
+      local _vectorZ = Vector:new(self.maxSpeed,_playerDegreesAngle)
+      self.speed = self.speed:add(_vectorZ)
     end
     if love.keyboard.isDown("s") then
-      newX = self.x1 + self.vectors['s'].x*dt
-      newY = self.y1 - self.vectors['s'].y*dt
+      local _vectorS = Vector:new(self.maxSpeed,_playerDegreesAngle + 180)
+      self.speed = self.speed:add(_vectorS)
     end
     if love.keyboard.isDown("q") then
-      newX = self.x1 + self.vectors['q'].x*dt
-      newY = self.y1 - self.vectors['q'].y*dt
+      local _vectorQ = Vector:new(self.maxSpeed,_playerDegreesAngle + 90)
+      self.speed = self.speed:add(_vectorQ)
     end
     if love.keyboard.isDown("d") then
-      newX = self.x1 + self.vectors['d'].x*dt
-      newY = self.y1 - self.vectors['d'].y*dt
+      local _vectorD = Vector:new(self.maxSpeed,_playerDegreesAngle - 90)
+      self.speed = self.speed:add(_vectorD)
     end
 
-    newTemoinX = newX + math.cos(self.a) * self.r
-    newTemoinY = newY - math.sin(self.a) * self.r
+    local newX = self.x1 + self.speed.x * dt
+    local newY = self.y1 + self.speed.y * dt
+
+    newTemoinX = newX + math.cos(MathUtils.degreesToRads(self.speed.angle)) * self.r
+    newTemoinY = newY - math.sin(MathUtils.degreesToRads(self.speed.angle)) * self.r
 
     mapX = math.floor(newTemoinX/Level.squareSize) +1
     mapY = math.floor(newTemoinY/Level.squareSize) +1
+
+
     mapSquare = Level.walls[(mapY-1)*Level.width+mapX]
 
 
@@ -96,13 +75,16 @@ local Player = {
   draw2D = function(self)
 
     love.graphics.setColor(0, 1, 0, 1)
-    love.graphics.print("mapX: " .. mapX .. " mapY: " .. mapY, newTemoinX + 10, newTemoinY - 10)
+    love.graphics.print("mapX: " .. mapX .. " mapY: " .. mapY, newTemoinX + 50, newTemoinY - 50)
 
     love.graphics.rectangle('fill', (mapX-1)*Level.squareSize, (mapY-1)*Level.squareSize, Level.squareSize, Level.squareSize)
 
     love.graphics.setColor(252/255, 186/255, 3/255, 1)
     love.graphics.rectangle("fill", self.x1-5, self.y1-5, 10, 10)
+    love.graphics.setLineWidth(3)
     love.graphics.line(self.x1, self.y1, self.x2, self.y2)
+    love.graphics.setColor(0, 1, 0, 1)
+    love.graphics.line(self.x1, self.y1, newTemoinX, newTemoinY)
   end
 
 }

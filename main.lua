@@ -1,5 +1,5 @@
 Vector = require "librairies/vector"
-MathUtils = require "librairies/vector"
+MathUtils = require "librairies/mathUtils"
 
 Raycast = require "raycast"
 Level = require "level"
@@ -9,7 +9,7 @@ Minimap = require "minimap"
 
 function love.load()
 
-  -- Theeme
+  -- Theme
   doomE1m1 = love.audio.newSource("resources/audio/doom.wav", "stream")
   doomE1m1:setLooping(true)
   doomE1m1:setVolume(0.5)
