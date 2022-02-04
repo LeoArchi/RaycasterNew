@@ -194,8 +194,8 @@ local Raycast = {
 
     for i,ray in ipairs(self.rays) do
 
-      love.graphics.setColor(ray.color)
-
+      --love.graphics.setColor(ray.color)
+      love.graphics.setColor(10/255, 255/255, 157/255)
       love.graphics.line(ray.x1, ray.y1, ray.x2, ray.y2)
     end
 

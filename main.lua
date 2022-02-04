@@ -1,6 +1,11 @@
+Vector = require "librairies/vector"
+MathUtils = require "librairies/vector"
+
 Raycast = require "raycast"
 Level = require "level"
 Player = require "player"
+Minimap = require "minimap"
+
 
 function love.load()
 
@@ -17,6 +22,8 @@ function love.load()
   Player:init(love.graphics.getWidth()/2+25, love.graphics.getHeight()/2+25, 15, 0)
   Raycast:init(60,800)
   Level:init()
+
+  Minimap:init(20, 20, 175, 100)
 
 end
 
@@ -47,5 +54,6 @@ function love.draw()
   --Player:draw2D()
 
   Raycast:draw3D()
+  Minimap:draw()
 
 end

@@ -44,16 +44,16 @@ local Level = {
         local _squareY = (y-1) * self.squareSize
 
         if _square == 0 then
-          love.graphics.setColor(0.1, 0.1, 0.1, 1)
-          love.graphics.rectangle('fill', _squareX, _squareY, self.squareSize, self.squareSize)
-          love.graphics.setColor(0.3, 0.3, 0.3, 1)
-          love.graphics.rectangle('line', _squareX, _squareY, self.squareSize, self.squareSize)
-        else
-          love.graphics.setColor(0.9, 0.9, 0.9, 1)
-          love.graphics.rectangle('fill', _squareX, _squareY, self.squareSize, self.squareSize)
-          love.graphics.setColor(0.3, 0.3, 0.3, 1)
-          love.graphics.rectangle('line', _squareX, _squareY, self.squareSize, self.squareSize)
+          love.graphics.setColor(255/255, 228/255, 163/255, 1)
+        elseif _square == 1 then
+          love.graphics.setColor(0.8, 0.4, 0.4, 1) -- Rouge "Vertical"
+        elseif _square == 2 then
+          love.graphics.setColor(0.4, 0.4, 0.8, 1) -- Bleu "Vertical"
         end
+
+        love.graphics.rectangle('fill', _squareX, _squareY, self.squareSize, self.squareSize)
+        love.graphics.setColor(0.3, 0.3, 0.3, 1)
+        love.graphics.rectangle('line', _squareX, _squareY, self.squareSize, self.squareSize)
 
 
       end
