@@ -1,3 +1,5 @@
+local LevelOne = require "levels/levelOne"
+
 local Level = {
 
   width,
@@ -11,9 +13,10 @@ local Level = {
 
   init = function(self)
 
+    --[[ Définition en dur d'un niveau
     self.width = 16
     self.height = 12
-    self.squareSize = 50
+    self.squareSize = 25
 
     self.spawn = {}
     self.spawn.x = 9
@@ -32,7 +35,14 @@ local Level = {
       1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,
       1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,
       1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-    }
+    }]]
+
+    -- Récupération des donnés du LevelOne
+    self.width = LevelOne.width
+    self.height = LevelOne.height
+    self.squareSize = LevelOne.squareSize
+    self.spawn = LevelOne.spawn
+    self.walls = LevelOne.walls
 
 
   end,
