@@ -53,18 +53,26 @@ local Player = {
     local newX = self.x1 + self.speed.x * dt
     local newY = self.y1 + self.speed.y * dt
 
-    newTemoinX = newX + math.cos(MathUtils.degreesToRads(self.speed.angle)) * self.r
-    newTemoinY = newY - math.sin(MathUtils.degreesToRads(self.speed.angle)) * self.r
+    newTemoinX = newX + math.cos(MathUtils.degreesToRads(self.speed.angle)) * 5
+    newTemoinY = newY - math.sin(MathUtils.degreesToRads(self.speed.angle)) * 5
 
-    mapX = math.floor(newTemoinX/Level.squareSize) +1
-    mapY = math.floor(newTemoinY/Level.squareSize) +1
+    oldMapX = math.floor(self.x1/Level.squareSize) +1
+    newMapX = math.floor(newTemoinX/Level.squareSize) +1
+    oldMapY = math.floor(self.y1/Level.squareSize) +1
+    newMapY = math.floor(newTemoinY/Level.squareSize) +1
 
+    mapSquareNewX = Level.walls[(oldMapY-1)*Level.width+newMapX]
+    mapSquareNewY = Level.walls[(newMapY-1)*Level.width+oldMapX]
 
-    mapSquare = Level.walls[(mapY-1)*Level.width+mapX]
+    if mapSquareNewX == 0 then
+      -- Si la case est vide, avancer normalement sur l'axe X
+      self.x1 = newX
+    end
 
-
-    self.x1 = newX
-    self.y1 = newY
+    if mapSquareNewY == 0 then
+      -- Si la case est vide, avancer normalement sur l'axe Y
+      self.y1 = newY
+    end
 
     -- Calcul de la position du témoin d'orientation
     self.x2 = self.x1 + math.cos(self.a) * self.r
@@ -73,12 +81,6 @@ local Player = {
   end,
 
   draw2D = function(self)
-
-    love.graphics.setColor(0, 1, 0, 1)
-    love.graphics.print("mapX: " .. mapX .. " mapY: " .. mapY, newTemoinX + 50, newTemoinY - 50)
-
-    love.graphics.rectangle('fill', (mapX-1)*Level.squareSize, (mapY-1)*Level.squareSize, Level.squareSize, Level.squareSize)
-
     love.graphics.setColor(252/255, 186/255, 3/255, 1)
     love.graphics.rectangle("fill", self.x1-5, self.y1-5, 10, 10)
     love.graphics.setLineWidth(3)
