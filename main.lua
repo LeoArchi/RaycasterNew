@@ -19,9 +19,10 @@ function love.load()
   love.mouse.setPosition(love.graphics.getWidth()/2, love.graphics.getHeight()/2)
   love.mouse.setGrabbed(true)
 
-  Player:init(love.graphics.getWidth()/2+25, love.graphics.getHeight()/2+25, 15, 0)
-  Raycast:init(60,800)
   Level:init()
+  Player:init(15, 0)
+  Raycast:init(60,800)
+
 
   Minimap:init(20, 20, 175, 100)
 

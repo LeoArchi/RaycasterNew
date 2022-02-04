@@ -13,7 +13,11 @@ local Level = {
 
     self.width = 16
     self.height = 12
-    self.squareSize = 50
+    self.squareSize = 25
+
+    self.spawn = {}
+    self.spawn.x = 9
+    self.spawn.y = 7
 
     self.walls = {
       1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -44,7 +48,7 @@ local Level = {
         local _squareY = (y-1) * self.squareSize
 
         if _square == 0 then
-          love.graphics.setColor(255/255, 228/255, 163/255, 1)
+          love.graphics.setColor(0.1, 0.1, 0.1, 1)
         elseif _square == 1 then
           love.graphics.setColor(0.8, 0.4, 0.4, 1) -- Rouge "Vertical"
         elseif _square == 2 then

@@ -9,9 +9,9 @@ local Player = {
   speed,
   vectors,
 
-  init = function(self, x1, y1, r, a)
-    self.x1 = x1
-    self.y1 = y1
+  init = function(self, r, a)
+    self.x1 =  Level.spawn.x * Level.squareSize - Level.squareSize/2 -- Spawn en fonction du Level
+    self.y1 =  Level.spawn.y * Level.squareSize - Level.squareSize/2 -- Spawn en fonction du Level
     self.r = r
     self.a = a
     self.x2 = self.x1 + self.r
