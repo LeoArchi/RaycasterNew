@@ -13,7 +13,7 @@ local Level = {
 
     self.width = 16
     self.height = 12
-    self.squareSize = 25
+    self.squareSize = 50
 
     self.spawn = {}
     self.spawn.x = 9

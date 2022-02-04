@@ -39,7 +39,7 @@ local Minimap = {
     love.graphics.scale(self.scale, self.scale)
 
     Level:draw()
-    Raycast:draw2D()
+    --Raycast:draw2D()
     Player:draw2D()
 
     love.graphics.pop()
