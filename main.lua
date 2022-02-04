@@ -4,6 +4,12 @@ Player = require "player"
 
 function love.load()
 
+  -- Theeme
+  doomE1m1 = love.audio.newSource("resources/audio/doom.wav", "stream")
+  doomE1m1:setLooping(true)
+  doomE1m1:setVolume(0.5)
+  doomE1m1:play()
+
   love.mouse.setRelativeMode(true)
   love.mouse.setPosition(love.graphics.getWidth()/2, love.graphics.getHeight()/2)
   love.mouse.setGrabbed(true)
