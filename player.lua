@@ -53,8 +53,8 @@ local Player = {
     local newX = self.x1 + self.speed.x * dt
     local newY = self.y1 + self.speed.y * dt
 
-    newTemoinX = newX + math.cos(MathUtils.degreesToRads(self.speed.angle)) * 5
-    newTemoinY = newY - math.sin(MathUtils.degreesToRads(self.speed.angle)) * 5
+    newTemoinX = newX + math.cos(MathUtils.degreesToRads(self.speed.angle)) * self.r
+    newTemoinY = newY - math.sin(MathUtils.degreesToRads(self.speed.angle)) * self.r
 
     oldMapX = math.floor(self.x1/Level.squareSize) +1
     newMapX = math.floor(newTemoinX/Level.squareSize) +1
