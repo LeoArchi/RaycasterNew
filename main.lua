@@ -57,6 +57,12 @@ function love.keypressed(key, scancode, isrepeat)
      else
        displayCasting = true
      end
+   elseif key == "p" then
+     if doomE1m1:isPlaying() then
+        doomE1m1:pause()
+      else
+        doomE1m1:play()
+      end
    end
 
 end
