@@ -25,13 +25,16 @@ function love.load()
   shotgunAnimation = AnimationUtils:new(love.graphics.newImage("resources/img/Shotgun spritesheet.png"), 135, 140, 1.5)
   heartAnimation = AnimationUtils:new(love.graphics.newImage("resources/img/Heart spritesheet.png"), 234, 268, 0.3)
 
+  -- Base texture
+  baseTextureData = love.image.newImageData('resources/img/base texture.png')
+
   love.mouse.setRelativeMode(true)
   love.mouse.setPosition(love.graphics.getWidth()/2, love.graphics.getHeight()/2)
   love.mouse.setGrabbed(true)
 
   Level:init()
   Player:init(15, 0)
-  Raycast:init(60,800)
+  Raycast:init(60,200)
 
   HUD:init()
   Minimap:init(20, 20, 175, 100)
