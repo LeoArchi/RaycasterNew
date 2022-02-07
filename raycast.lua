@@ -64,7 +64,9 @@ local function checkHorizontalLines(x1, y1, rayAngleRad)
   end
 
   ray.dist = math.sqrt(math.pow(ray.x2 - ray.x1, 2)+math.pow(ray.y2 - ray.y1, 2))
-  ray.textureOffsetX = (ray.x2 % Level.squareSize) / Level.squareSize
+
+  local _offsetX = (ray.x2 % Level.squareSize) / Level.squareSize
+  ray.texturePosX = math.floor(_offsetX * baseTextureData:getWidth())
 
   return ray
 
@@ -139,7 +141,9 @@ local function checkVerticalLines(x1, y1, rayAngleRad)
   end
 
   ray.dist = math.sqrt(math.pow(ray.x2 - ray.x1, 2)+math.pow(ray.y2 - ray.y1, 2))
-  ray.textureOffsetX = (ray.y2 % Level.squareSize) / Level.squareSize
+
+  local _offsetX = (ray.y2 % Level.squareSize) / Level.squareSize
+  ray.texturePosX = math.floor(_offsetX * baseTextureData:getWidth())
 
   return ray
 end
@@ -226,27 +230,23 @@ local Raycast = {
       local rectangleOffsetX = love.graphics.getWidth()-(i*love.graphics.getWidth()/self.res)
       local rectangleOffsetY = love.graphics.getHeight()/2-lineHeight/2
 
-      for rectangleY=0,lineHeight do
-        for rectangleX=0,love.graphics.getWidth()/self.res do
+
+      local texturePosX = ray.texturePosX
+
+      local textureOffsetY = lineHeight / baseTextureData:getHeight()
+
+
+      for rectangleY=0,(lineHeight-1) do
+
+        local texturePosY = math.floor(rectangleY/textureOffsetY)
+
+        love.graphics.setColor(baseTextureData:getPixel(texturePosX, texturePosY))
+
+        for rectangleX=0,(love.graphics.getWidth()/self.res-1) do
           love.graphics.points(rectangleX + rectangleOffsetX, rectangleY + rectangleOffsetY)
         end
+
       end
-
-      --[[local textureOffsetY = lineHeight / baseTextureData:getHeight()
-
-      for j=0,lineHeight-1 do
-
-        print("-----------------")
-        print(ray.textureOffsetX * baseTextureData:getWidth())
-        print(j/textureOffsetY)
-
-        love.graphics.setColor(baseTextureData:getPixel(ray.textureOffsetX * baseTextureData:getWidth(), math.floor(j/textureOffsetY)+1 ))
-
-        for i=0,love.graphics.getWidth()/self.res -1 do
-          love.graphics.points(i + rectangleX, j + rectangleY)
-        end
-      end]]
-
 
     end
 
