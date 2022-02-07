@@ -1,6 +1,8 @@
 Vector = require "librairies/vector"
 MathUtils = require "librairies/mathUtils"
+AnimationUtils = require "librairies/animationUtils"
 
+HUD = require "hud"
 Raycast = require "raycast"
 Level = require "level"
 Player = require "player"
@@ -15,6 +17,14 @@ function love.load()
   doomE1m1:setVolume(0.5)
   doomE1m1:play()
 
+  -- Shotgun
+  shotgun_sound = love.audio.newSource("resources/audio/shotgun.wav", "static")
+  shotgun_sound:setVolume(1)
+
+  -- Shotgun spritesheet
+  shotgunAnimation = AnimationUtils:new(love.graphics.newImage("resources/img/Shotgun spritesheet.png"), 135, 140, 1.5)
+  heartAnimation = AnimationUtils:new(love.graphics.newImage("resources/img/Heart spritesheet.png"), 234, 268, 0.3)
+
   love.mouse.setRelativeMode(true)
   love.mouse.setPosition(love.graphics.getWidth()/2, love.graphics.getHeight()/2)
   love.mouse.setGrabbed(true)
@@ -23,6 +33,7 @@ function love.load()
   Player:init(15, 0)
   Raycast:init(60,800)
 
+  HUD:init()
   Minimap:init(20, 20, 175, 100)
 
   mode = "3D"
@@ -35,6 +46,7 @@ end
 function love.update(dt)
   Player:update(dt)
   Raycast:update(dt)
+  HUD:update(dt)
 end
 
 
@@ -76,7 +88,8 @@ function love.draw()
     Player:draw2D()
   elseif mode == "3D" then
     Raycast:draw3D()
-    Minimap:draw()
+    Player:draw3D()
+    HUD:draw()
   end
 
 end

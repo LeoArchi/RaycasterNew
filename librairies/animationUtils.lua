@@ -6,10 +6,8 @@ local AnimationUtils = {
   currentTime,
   width,
   height,
-  infinite,
-  isFinished = false,
 
-  new = function(self, image, width, height, duration, infinite)
+  new = function(self, image, width, height, duration)
 
     local _animation = {}
 
@@ -31,8 +29,6 @@ local AnimationUtils = {
     _animation.width = width
     _animation.height = height
 
-    _animation.infinite = infinite
-
     return _animation
 
   end,
@@ -40,20 +36,13 @@ local AnimationUtils = {
   update = function(self, dt)
     self.currentTime = self.currentTime + dt
       if self.currentTime >= self.duration then
-        if self.infinite then
-          self.currentTime = self.currentTime - self.duration
-        else
-          self.isFinished = true
-          return self.isFinished
-        end
+          self.currentTime = 0
       end
   end,
 
   draw = function(self, x, y)
-    if self.isFinished == false then
-      local spriteNum = math.floor(self.currentTime / self.duration * #self.quads) + 1
-      love.graphics.draw(self.spriteSheet, self.quads[spriteNum], x, y, 0, 1)
-    end
+    local spriteNum = math.floor(self.currentTime / self.duration * #self.quads) + 1
+    love.graphics.draw(self.spriteSheet, self.quads[spriteNum], self.x - self.width/2, self.y - self.height/2, 0, 1)
   end
 
 }

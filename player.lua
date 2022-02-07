@@ -8,6 +8,7 @@ local Player = {
   y2,
   maxSpeed,
   speed,
+  life,
   --vectors,
 
   init = function(self, r, a)
@@ -16,6 +17,7 @@ local Player = {
     self.r = r
     self.a = a
     self.maxSpeed = 100
+    self.life = 100
   end,
 
   update = function(self, dt)
@@ -78,6 +80,12 @@ local Player = {
     self.x2 = self.x1 + math.cos(self.a) * self.r
     self.y2 = self.y1 - math.sin(self.a) * self.r
 
+    -- Mise à jour de l'animation du shotgun
+    --shotgunAnimation.currentTime = shotgunAnimation.currentTime + dt
+    --if shotgunAnimation.currentTime >= shotgunAnimation.duration then
+        --shotgunAnimation.currentTime = shotgunAnimation.currentTime - shotgunAnimation.duration
+    --end
+
   end,
 
   draw2D = function(self)
@@ -87,6 +95,12 @@ local Player = {
     love.graphics.line(self.x1, self.y1, self.x2, self.y2)
     love.graphics.setColor(0, 1, 0, 1)
     love.graphics.line(self.x1, self.y1, newTemoinX, newTemoinY)
+  end,
+
+  draw3D = function(self)
+    love.graphics.setColor(1, 1, 1, 1)
+    local spriteNum = math.floor(shotgunAnimation.currentTime / shotgunAnimation.duration * #shotgunAnimation.quads) + 1
+    love.graphics.draw(shotgunAnimation.spriteSheet, shotgunAnimation.quads[spriteNum], love.graphics.getWidth()/2 - shotgunAnimation.width/2, love.graphics.getHeight() - 100 - shotgunAnimation.height, 0, 1)
   end
 
 }
@@ -99,6 +113,13 @@ function love.mousemoved( x, y, dx, dy, istouch )
     Player.a = Player.a - math.abs(dx) * 0.02
   end
 
+end
+
+function love.mousepressed(x, y, button)
+   if button == 1 then
+     local _shotgun_sound = shotgun_sound:clone()
+     _shotgun_sound:play()
+   end
 end
 
 return Player
