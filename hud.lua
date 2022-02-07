@@ -20,6 +20,10 @@ local HUD = {
     if heartAnimation.currentTime >= heartAnimation.duration then
         heartAnimation.currentTime = heartAnimation.currentTime - heartAnimation.duration
     end
+
+    -- Mise à jour des FPS
+    fps = math.ceil(1/dt)
+    fpsText = love.graphics.newText( middleFont, "FPS: " .. fps )
   end,
 
 
@@ -27,10 +31,18 @@ local HUD = {
 
     Minimap:draw()
 
+    love.graphics.setLineWidth(3)
+
+    -- FPS
+    love.graphics.setColor(0.15, 0.15, 0.15, 1)
+    love.graphics.rectangle('fill', love.graphics.getWidth()-108, 20, 88, 50)
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.rectangle('line', love.graphics.getWidth()-108, 20, 88, 50)
+    love.graphics.draw(fpsText, love.graphics.getWidth()-104, 33)
+
+    -- Base HUD
     love.graphics.setColor(0.15, 0.15, 0.15, 1)
     love.graphics.rectangle('fill', self.x, self.y, self.width, self.height)
-
-    love.graphics.setLineWidth(3)
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.rectangle('line', self.x, self.y, self.width, self.height)
 
