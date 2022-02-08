@@ -224,37 +224,43 @@ local Raycast = {
       local distCorr = math.cos(ray.angle - Player.a) * ray.dist
       local lineHeight = Level.squareSize * 600 / distCorr
 
-      love.graphics.setColor(ray.color)
+      if texturesOn == false then
+        -- OLD : Rectangle plein
+        love.graphics.setColor(ray.color)
+        love.graphics.setLineWidth(1)
+        love.graphics.rectangle('fill', love.graphics.getWidth()-(i*love.graphics.getWidth()/self.res), love.graphics.getHeight()/2-lineHeight/2, love.graphics.getWidth()/self.res, lineHeight)
+      else
+        -- NEW on dessine pixel par pixel
 
-      -- OLD on dessine un rectangle plein
-      --love.graphics.rectangle('fill', love.graphics.getWidth()-(i*love.graphics.getWidth()/self.res), love.graphics.getHeight()/2-lineHeight/2, love.graphics.getWidth()/self.res, lineHeight)
+        local rectangleOffsetX = love.graphics.getWidth()-(i*love.graphics.getWidth()/self.res)
+        local rectangleOffsetY = love.graphics.getHeight()/2-lineHeight/2
 
-      -- NEW on dessine pixel par pixel
+        local texturePosX = ray.texturePosX
 
-      local rectangleOffsetX = love.graphics.getWidth()-(i*love.graphics.getWidth()/self.res)
-      local rectangleOffsetY = love.graphics.getHeight()/2-lineHeight/2
-
-
-      local texturePosX = ray.texturePosX
-
-      local textureOffsetY = lineHeight / baseTextureData:getHeight()
+        local textureOffsetY = lineHeight / baseTextureData:getHeight()
 
 
-      for rectangleY=0,(lineHeight-1) do
+        for rectangleY=0,(lineHeight-1) do
 
-        local texturePosY = math.floor(rectangleY/textureOffsetY)
+          local texturePosY = math.floor(rectangleY/textureOffsetY)
 
-        -- Dans le cas des murs "Gauches" et "Bas", il faut inverser la boucle pour ne pas inverser la texture
-        if (ray.direction == "vertical" and ray.angle > math.pi/2 and ray.angle < 3*math.pi/2) or (ray.direction == "horizontal" and ray.angle > math.pi and ray.angle < 2*math.pi) then
-          love.graphics.setColor(baseTextureData:getPixel(baseTextureData:getWidth() - texturePosX - 1, texturePosY))
-        else
-          love.graphics.setColor(baseTextureData:getPixel(texturePosX, texturePosY))
+          -- Dans le cas des murs "Gauches" et "Bas", il faut inverser la boucle pour ne pas inverser la texture
+          if (ray.direction == "vertical" and ray.angle > math.pi/2 and ray.angle < 3*math.pi/2) or (ray.direction == "horizontal" and ray.angle > math.pi and ray.angle < 2*math.pi) then
+            love.graphics.setColor(baseTextureData:getPixel(baseTextureData:getWidth() - texturePosX - 1, texturePosY))
+          else
+            love.graphics.setColor(baseTextureData:getPixel(texturePosX, texturePosY))
+          end
+
+          local _points = {}
+
+          for rectangleX=0,(love.graphics.getWidth()/self.res-1) do
+            table.insert(_points, {rectangleX + rectangleOffsetX, rectangleY + rectangleOffsetY})
+            --love.graphics.points(rectangleX + rectangleOffsetX, rectangleY + rectangleOffsetY)
+          end
+
+          love.graphics.points(_points)
+
         end
-
-        for rectangleX=0,(love.graphics.getWidth()/self.res-1) do
-          love.graphics.points(rectangleX + rectangleOffsetX, rectangleY + rectangleOffsetY)
-        end
-
       end
 
     end

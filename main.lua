@@ -29,6 +29,9 @@ function love.load()
   baseTextureData = love.image.newImageData('resources/img/base texture.png')
   --baseTextureData = love.image.newImageData('resources/img/bricks.png')
 
+  -- Switch mode "texturé" ou mode "simple"
+  texturesOn = false
+
   -- Font utilisé pour les fps
   middleFont = love.graphics.newFont(20)
 
@@ -81,6 +84,12 @@ function love.keypressed(key, scancode, isrepeat)
         doomE1m1:pause()
       else
         doomE1m1:play()
+      end
+    elseif key == "t" then
+      if texturesOn == true then
+        texturesOn = false
+      else
+        texturesOn = true
       end
    end
 
