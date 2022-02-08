@@ -68,6 +68,8 @@ local function checkHorizontalLines(x1, y1, rayAngleRad)
   local _offsetX = (ray.x2 % Level.squareSize) / Level.squareSize
   ray.texturePosX = math.floor(_offsetX * baseTextureData:getWidth())
 
+  ray.direction = "horizontal"
+
   return ray
 
 end
@@ -144,6 +146,8 @@ local function checkVerticalLines(x1, y1, rayAngleRad)
 
   local _offsetX = (ray.y2 % Level.squareSize) / Level.squareSize
   ray.texturePosX = math.floor(_offsetX * baseTextureData:getWidth())
+
+  ray.direction = "vertical"
 
   return ray
 end
@@ -240,7 +244,12 @@ local Raycast = {
 
         local texturePosY = math.floor(rectangleY/textureOffsetY)
 
-        love.graphics.setColor(baseTextureData:getPixel(texturePosX, texturePosY))
+        -- Dans le cas des murs "Gauches" et "Bas", il faut inverser la boucle pour ne pas inverser la texture
+        if (ray.direction == "vertical" and ray.angle > math.pi/2 and ray.angle < 3*math.pi/2) or (ray.direction == "horizontal" and ray.angle > math.pi and ray.angle < 2*math.pi) then
+          love.graphics.setColor(baseTextureData:getPixel(baseTextureData:getWidth() - texturePosX - 1, texturePosY))
+        else
+          love.graphics.setColor(baseTextureData:getPixel(texturePosX, texturePosY))
+        end
 
         for rectangleX=0,(love.graphics.getWidth()/self.res-1) do
           love.graphics.points(rectangleX + rectangleOffsetX, rectangleY + rectangleOffsetY)
